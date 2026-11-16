@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=./node_modules/envio/svm.schema.json
+name: solana-usdc-24h-indexer
+description: Every USDC transfer on Solana over 24 hours (15 Nov 12:00 to 16 Nov 12:00 UTC, the morning of Breakpoint 2026 day 1), rolled up into counts, volume, senders and hourly stats.
+ecosystem: svm
+chains:
+  - id: solana
+    # Slot 469721604 is the first block at or after 2026-11-15 12:00:00 UTC and
+    # slot 470123645 the first at or after 2026-11-16 12:00:00 UTC (block_time from HyperSync).
+    # For a live indexer instead, set `start_slot: latest` and drop end_slot.
+    start_slot: 469721604
+    end_slot: 470123644
+programs:
+  # USDC lives on the original SPL Token program.
+  - name: SplToken
+    program_id: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+    instructions:
+      - name: transfer
+        discriminator: "0x03"
+        accounts: [source, destination, authority]
+        args:
+          - name: amount
+            type: u64
+      - name: transferChecked
+        discriminator: "0x0c"
+        accounts: [source, mint, destination, authority]
+        args:
+          - name: amount
+            type: u64
+          - name: decimals
+            type: u8

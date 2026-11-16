@@ -1,0 +1,14 @@
+{
+ "start": 469721604,
+ "end_exclusive": 470123645,
+ "transfers": 11258900,
+ "volume": 4985351808112551,
+ "top": 2475163,
+ "top_volume": 2758112168030402,
+ "plain": 3771235,
+ "checked": 7487665,
+ "top_senders": 308440,
+ "senders": 490316,
+ "volume_usd": 4985351808.112551,
+ "top_volume_usd": 2758112168.030402
+}

@@ -1,0 +1,45 @@
+# Amounts are raw USDC base units (6 decimals).
+
+"One row, id 'USDC': totals over the indexed window."
+type UsdcTotals {
+  id: ID!
+  transfers: BigInt!
+  volume: BigInt!
+  "Transfers sent at the top of a transaction (path length 1), usually straight from a wallet."
+  topLevel: BigInt!
+  topLevelVolume: BigInt!
+  plainTransfers: BigInt!
+  checkedTransfers: BigInt!
+  "Transfer instructions inside failed transactions. Not counted above."
+  failedSkipped: BigInt!
+  "Distinct authorities (signers) of top-level transfers."
+  topLevelSenders: BigInt!
+  "Distinct authorities of any transfer, including program-owned accounts."
+  allSenders: BigInt!
+  firstSlot: Int!
+  lastSlot: Int!
+  firstTime: Int!
+  lastTime: Int!
+}
+
+"One row per authority that signed a USDC transfer."
+type Sender {
+  id: ID!
+  transfers: Int!
+  topLevel: Int!
+}
+
+type HourlyStat {
+  id: ID! # unix hour index
+  hour: Int! @index
+  transfers: Int!
+  topLevel: Int!
+  volume: BigInt!
+}
+
+type SizeBucket {
+  id: ID!
+  transfers: BigInt!
+  topLevel: BigInt!
+  volume: BigInt!
+}
